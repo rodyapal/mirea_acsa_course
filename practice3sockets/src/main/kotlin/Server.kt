@@ -12,12 +12,18 @@ private class MessageGetTask(
 	private val onMessageReceived: (message: String) -> Unit
 ) : Runnable {
 	override fun run() {
-		try {
-			val input = Scanner(socket.getInputStream()).nextLine()
-			println("Received: $input")
-			onMessageReceived(input)
-		} catch (e: Exception) {
-			e.printStackTrace()
+		while (true) {
+			try {
+				val input = Scanner(socket.getInputStream()).nextLine()
+				println("Received: $input")
+				onMessageReceived(input)
+			} catch (e: Exception) {
+				System.err.println(
+					"Connection lost with $socket. Terminating."
+				)
+				socket.close()
+				return
+			}
 		}
 	}
 }
@@ -36,14 +42,13 @@ private class MessageBroadcastTask(
 		}
 		try {
 			sockets.forEach { socket ->
-				val writer = PrintWriter(socket.getOutputStream())
-				val message = broadcastData
+				val writer = PrintWriter(socket.getOutputStream(), true)
+				broadcastData
 					.elements()
 					.toList()
-					.joinToString(
-						separator = "\n"
-					)
-				writer.println(message)
+					.forEach {
+						writer.println(it)
+					}
 			}
 		} catch (e: Exception) {
 			println(" failed\n${e.message}")
@@ -59,12 +64,14 @@ fun main() {
 	val listener = ServerSocket(50_001)
 	val sockets = mutableListOf<Socket>()
 	val data = Vector<String>()
-	data.addElement("sample string")
 	val pool = Executors.newFixedThreadPool(20)
-	val broadcastTimer = Timer().scheduleAtFixedRate(
+	Timer().scheduleAtFixedRate(
 		MessageBroadcastTask(data, sockets) { successful ->
+			println("[LOG]: $data")
+			println("[LOG]: $sockets")
 			if (successful) {
 				data.clear()
+				sockets.removeIf { it.isClosed }
 			}
 		}, 5000, 10_000
 	)
