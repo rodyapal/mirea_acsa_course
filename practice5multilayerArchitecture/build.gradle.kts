@@ -34,7 +34,13 @@ dependencies {
 	implementation("io.ktor:ktor-server-html-builder-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+	// Ktorm
 	implementation("org.ktorm:ktorm-core:$ktormVersion")
+
+	// Jdbc
+	implementation("org.postgresql:postgresql:42.5.0")
+//	runtimeOnly("org.postgresql:postgresql")
 
 	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")

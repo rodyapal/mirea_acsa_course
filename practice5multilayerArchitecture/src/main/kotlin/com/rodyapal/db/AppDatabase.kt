@@ -8,7 +8,7 @@ private const val DB_PASS = "acsa"
 
 object AppDatabase {
 	private val database = Database.connect(
-		url = "jdbc:postgresql://localhost:5432/mirea_acsa_five",
+		"jdbc:postgresql://localhost:5432/mirea_acsa_five",
 		user = DB_USER,
 		password = DB_PASS
 	)
