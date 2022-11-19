@@ -7,15 +7,15 @@ import io.ktor.server.routing.*
 
 fun Application.configureTemplating() {
 
-
 	routing {
-		get("/html-dsl") {
+		get("/") {
 			call.respondHtml {
 				body {
-					h1 { +"HTML" }
-					ul {
-						for (n in 1..10) {
-							li { +"$n" }
+					button(name = "test button") {
+						script(type = ScriptType.textJavaScript) {
+							"""
+								console.log('text')
+							""".trimIndent()
 						}
 					}
 				}

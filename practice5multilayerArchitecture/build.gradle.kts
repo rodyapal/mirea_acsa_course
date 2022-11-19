@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+	// Ktor
 	implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-host-common-jvm:$ktorVersion")
 	implementation("io.ktor:ktor-server-websockets-jvm:$ktorVersion")
@@ -34,6 +35,7 @@ dependencies {
 	implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
 	implementation("ch.qos.logback:logback-classic:$logbackVersion")
 	implementation("org.ktorm:ktorm-core:$ktormVersion")
+
 	testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }
