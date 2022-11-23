@@ -7,8 +7,6 @@ import com.rodyapal.plugins.*
 fun main() {
 	embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
 		configureSockets()
-		configureSerialization()
 		configureTemplating()
-		configureRouting()
 	}.start(wait = true)
 }
